@@ -59,7 +59,23 @@ function plusHandler(event){
     id = timer()
 }
 function pauseHandler(event){
-    console.log('clicked pause')
+    const {target} = event
+    const buttons = document.querySelectorAll('button:not(#pause)')    
+    const state = target.textContent.trim()
+    Array.from(buttons).forEach(button => button.toggleAttribute('disabled'))
+
+    if(state === 'pause'){
+        //change button text to be resume
+        //clearInterval
+        UpdateInnerText(' resume ', target)        
+        clearInterval(id)
+    }
+    else{
+        UpdateInnerText(' pause ', target)        
+        id = timer()
+    }
+    
+    
 }
 
 //other fns
@@ -76,31 +92,38 @@ function timer(){
 //utilities fn
 function creatElement(tag,innerText='',attributes={}){
     const element = document.createElement(tag)
-    const updatedElement = UpdateInnerText(innerText, element)  
-
-    if((Object.keys(attributes)).length === 0){
-        return updatedElement
-    } else {
-        for(const attr in attributes){
-            updatedElement.setAttribute(attr, attributes[attr])  
-        }
-        return updatedElement
-    } 
+    const updatedElement = UpdateInnerText(innerText, element)
     
+    return addAttributes(updatedElement, attributes)    
 }
+
 function addComment(comment){
     const list = document.querySelector('#list')
     const p = creatElement('p',comment)
     updateDom(p,list)       
 }
+
 function attachEventListener(event,elemnt, fnHandler){
     elemnt.addEventListener(event,fnHandler)
 }
+
 function UpdateInnerText(text,tag){
     tag.innerHTML = text
     return tag
 }
+
 function updateDom(elemnt, targetElemnt){
     targetElemnt.append(elemnt)
 }
-// <li data-num="43">43 has been liked <span>6</span> times</li>
+
+function addAttributes(element, attributes={}){
+
+    if((Object.keys(attributes)).length > 0){
+        for(const attr in attributes){
+            element.setAttribute(attr, attributes[attr])  
+        }
+        return element
+    }
+    return element   
+
+}
