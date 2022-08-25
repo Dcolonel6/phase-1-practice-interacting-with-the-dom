@@ -13,9 +13,11 @@ let seconds = 0
 //adding event listeners
 attachEventListener('submit',form ,submitHandler)
 attachEventListener('click',heart,loveHandler)
+attachEventListener('click',minus,minusHandler)
+attachEventListener('click',plus,plusHandler)
+attachEventListener('click',pause,pauseHandler)
 
-
-timer()
+let id = timer()
 
 
 //handlers
@@ -44,7 +46,21 @@ function loveHandler(event){
     }       
     
 }
-
+function minusHandler(event){
+    seconds = seconds - 1
+    clearInterval(id)
+    UpdateInnerText(seconds,counter)
+    id = timer()
+}
+function plusHandler(event){
+    seconds = seconds + 1
+    clearInterval(id)
+    UpdateInnerText(seconds,counter)
+    id = timer()
+}
+function pauseHandler(event){
+    console.log('clicked pause')
+}
 
 //other fns
 function timer(){    
@@ -53,7 +69,7 @@ function timer(){
         seconds++
 
     }, 1000)
-     
+    return intervalID     
 }
 
 
