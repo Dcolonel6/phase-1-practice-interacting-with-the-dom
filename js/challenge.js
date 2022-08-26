@@ -19,7 +19,6 @@ attachEventListener('click',pause,pauseHandler)
 
 let id = timer()
 
-
 //handlers
 function submitHandler(event){
     event.preventDefault()
@@ -67,15 +66,15 @@ function pauseHandler(event){
     if(state === 'pause'){
         //change button text to be resume
         //clearInterval
-        UpdateInnerText(' resume ', target)        
+        UpdateInnerText(' restart ', target)        
         clearInterval(id)
+        seconds = 0
     }
     else{
         UpdateInnerText(' pause ', target)        
         id = timer()
     }
-    
-    
+        
 }
 
 //other fns
